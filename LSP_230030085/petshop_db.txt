@@ -1,0 +1,155 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 12 Mar 2026 pada 16.27
+-- Versi server: 10.4.32-MariaDB
+-- Versi PHP: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `petshop`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `admin`
+--
+
+CREATE TABLE `admin` (
+  `id_admin` int(11) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `admin`
+--
+
+INSERT INTO `admin` (`id_admin`, `email`, `password`) VALUES
+(1, 'admin@boyaen.com', '12345');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `cart`
+--
+
+CREATE TABLE `cart` (
+  `id_cart` int(11) NOT NULL,
+  `id_product` int(11) NOT NULL,
+  `jumlah` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `cart`
+--
+
+INSERT INTO `cart` (`id_cart`, `id_product`, `jumlah`) VALUES
+(0, 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `product`
+--
+
+CREATE TABLE `product` (
+  `id_product` int(11) NOT NULL,
+  `nama_product` varchar(100) NOT NULL,
+  `harga` decimal(10,2) NOT NULL,
+  `stock` int(11) NOT NULL,
+  `gambar` varchar(100) NOT NULL,
+  `deskripsi` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `product`
+--
+
+INSERT INTO `product` (`id_product`, `nama_product`, `harga`, `stock`, `gambar`, `deskripsi`) VALUES
+(1, 'Makanan Kucing', 54000.00, 109, 'petshop1.png', 'Makanan sehat untuk kucing.'),
+(2, 'Makanan Anjing', 75000.00, 143, 'petshop2.png', 'Nutrisi lengkap untuk anjing.'),
+(3, 'Vitamin Hewan', 106000.00, 63, 'petshop3.png', 'Menjaga kesehatan hewan.'),
+(4, 'Shampoo Anjing', 64000.00, 53, 'petshop4.png', 'Membersihkan bulu anjing.'),
+(5, 'Shampoo Kucing', 59000.00, 76, 'petshop5.png', 'Membersihkan bulu kucing.'),
+(6, 'Kasur Hewan', 115000.00, 42, 'petshop6.png', 'Kasur nyaman untuk hewan.'),
+(7, 'Sisir Hewan', 28000.00, 150, 'petshop7.png', 'Sisir agar bulu hewan tidak kusut.'),
+(8, 'Gunting Kuku Hewan', 48000.00, 54, 'petshop8.png', 'Gunting kuku hewan agar tidak melukai saat bermain.'),
+(9, 'Kalung Hewan', 23000.00, 110, 'petshop9.png', 'Kalung untuk penanda kepemilikan.'),
+(10, 'Mainan Hewan', 19000.00, 143, 'petshop10.png', 'Mainan lucu untuk hewan.');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `user`
+--
+
+CREATE TABLE `user` (
+  `id_user` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `user`
+--
+
+INSERT INTO `user` (`id_user`, `username`, `email`, `password`) VALUES
+(0, 'boyaen', 'boyaen0.0@gmail.com', '12345');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indeks untuk tabel `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id_admin`);
+
+--
+-- Indeks untuk tabel `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`id_cart`),
+  ADD KEY `fk_cart_product` (`id_product`);
+
+--
+-- Indeks untuk tabel `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`id_product`);
+
+--
+-- Indeks untuk tabel `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id_user`);
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `fk_cart_product` FOREIGN KEY (`id_product`) REFERENCES `product` (`id_product`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
